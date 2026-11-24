@@ -572,7 +572,10 @@ void AccountList::setListFilePath(QString path, bool autosave)
 bool AccountList::anyAccountIsValid()
 {
     for (auto account : m_accounts) {
-        if (account->ownsMinecraft()) {
+        // An offline account can also be used to download game files: the version
+        // metadata is public, so an offline account counts as a valid account for
+        // downloading/updating instances.
+        if (account->ownsMinecraft() || account->accountType() == AccountType::Offline) {
             return true;
         }
     }

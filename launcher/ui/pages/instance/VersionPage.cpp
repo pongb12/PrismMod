@@ -402,7 +402,8 @@ void VersionPage::on_actionDownload_All_triggered()
     if (!APPLICATION->accounts()->anyAccountIsValid()) {
         CustomMessageBox::selectable(this, tr("Error"),
                                      tr("Cannot download Minecraft or update instances unless you have at least "
-                                        "one Microsoft account that owns Minecraft added.\nPlease add a Microsoft account."),
+                                        "one account added (a Microsoft account that owns Minecraft, or an offline "
+                                        "account).\nPlease add an account."),
                                      QMessageBox::Warning)
             ->show();
         return;

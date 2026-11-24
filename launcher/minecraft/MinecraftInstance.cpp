@@ -1218,7 +1218,13 @@ LaunchTask* MinecraftInstance::createLaunchTask(AuthSessionPtr session, Minecraf
             process->appendStep(makeShared<TaskStepWrapper>(pptr, t));
         }
     } else {
-        process->appendStep(makeShared<EnsureOfflineLibraries>(pptr, this));
+        // Offline accounts (and offline launches) still need the game files.
+        // Download whatever is missing (client jar, libraries, assets) so the
+        // instance can actually be played. This is a no-op when everything is
+        // already present; fetching missing files requires an internet connection.
+        for (auto t : createUpdateTask()) {
+            process->appendStep(makeShared<TaskStepWrapper>(pptr, t));
+        }
     }
 
     // if there are any jar mods
